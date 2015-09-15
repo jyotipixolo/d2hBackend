@@ -7,14 +7,17 @@
 	  //Write functions here 
  	 public function Inquiry($vehicleid, $userid, $ip, $fromloc, $toloc)
  	 {
- 	 	
- 	 	$sql2 = $this->db->query("SELECT `name`, `contact` FROM `users` WHERE `id`='$userid'")->row();
 
- 	 	$query = $this->db->query("INSERT INTO `inquiry` (`vehicleid`, `name`, `mobile`, `ip`, `date`, `fromloc`, `toloc`,`userid`) VALUES ('$vehicleid', '$sql2->name', '$sql2->contact', '$ip', NOW(), '$fromloc', '$toloc','$userid')");
- 	 	$id = $this->db->insert_id();
+    $sql3 = $this->db->query("SELECT `activestatus`, `availabilitystatus` FROM `vehicle_details` WHERE `id`='$vehicleid'")->row();
+    if($sql3->activestatus==1 and $sql3->availabilitystatus==1)
+     {
+ 	 	 $sql2 = $this->db->query("SELECT `name`, `contact` FROM `users` WHERE `id`='$userid'")->row();
 
- 	 	if($query==true)
- 	 	{
+ 	 	 $query = $this->db->query("INSERT INTO `inquiry` (`vehicleid`, `name`, `mobile`, `ip`, `date`, `fromloc`, `toloc`,`userid`) VALUES ('$vehicleid', '$sql2->name', '$sql2->contact', '$ip', NOW(), '$fromloc', '$toloc','$userid')");
+ 	 	 $id = $this->db->insert_id();
+
+ 	 	 if($query==true)
+ 	 	 {
  	 		
  	 		$sql = $this->db->query("SELECT `vehicle_details`.`pid`, `register`.`firstname` FROM `vehicle_details` INNER JOIN `register` ON `register`.`id` = `vehicle_details`.`pid` WHERE `vehicle_details`.`id` = $vehicleid")->row();  		
  	 		
@@ -34,10 +37,17 @@
                                  WHERE `vehicle_details`.`id`= $vehicleid)" );
  	 		}
  	 	
- 	 	}
+ 	 	 }
  	    return $query;
  	    
- 	 }
+ 	   }
+   
+     else
+     {
+      return false;
+     };
+
+   }
 
 
  	 public function inquiriesbydriverid($id)

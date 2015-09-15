@@ -30,7 +30,7 @@
  	 {
  	 	$data = $this->input->get('data'); 	 	
  	 	$data = json_decode($data); 	 
- 	 	$name = $data->name;
+ 	 	$name = $data->fullname;
  	 	$contact = $data->contact;
  	 	$message['json'] = $this->model->addusers($name,$contact);
  	 	$this->load->view('json', $message);

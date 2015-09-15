@@ -53,6 +53,10 @@ class PIXOLO_Controller extends CI_Controller {
 		$this->load->view('json', $message);
 	}
 
+	public function clicklogin(){
+		$message['json']=$this->model->clicklogin();
+	}
+
 	public function getmanybythree(){
 		$field1 = $this->input->get('field1');
 		$value1 = $this->input->get('value1');

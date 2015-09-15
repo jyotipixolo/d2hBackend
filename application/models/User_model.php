@@ -13,21 +13,36 @@
  			{
  			 /*$query = $this->db->query("INSERT INTO `users` (`fullname`, `mobileno`) VALUES ('$fullname', '$mobileno')");
  		     $id = $this->db->insert_id();*/
- 		     $query = $this->db->query("SELECT * FROM `users` WHERE `id`= $id")->row();
+ 		     $query = $this->db->query("SELECT * FROM `users` WHERE `contact`= $contact")->row();
  		     return $query;
 
  			}
  		else
  		   {
-             return false;
+             $query = $this->db->query("SELECT * FROM `users` WHERE `contact`= $contact")->row();
+ 		     return $query;
  		   }
     }  
 
     public function addusers($name, $contact)
     {
-    	$query = $this->db->query("INSERT INTO `users` (`name`, `contact`) VALUES ('$name', '$contact')");
- 		$id = $this->db->insert_id();
- 		return $query;
+    	$query = $this->db->query("SELECT * FROM `users` WHERE `contact` = $contact");
+
+
+    	if($query->num_rows()>0)
+    	{
+    		return $query->row();
+    	}
+    	else {
+           $query = $this->db->query("INSERT INTO `users` (`name`, `contact`) VALUES ('$name', '$contact')");
+ 		   $id = $this->db->insert_id();
+ 		   $query =$this->db->query("SELECT * FROM `users` WHERE `id`=$id")->row();
+ 		   return $query;
+           
+ 		     
+    	}   	
+        
+ 		
     }
  }
  
