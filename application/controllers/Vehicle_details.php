@@ -45,6 +45,13 @@
 
  	 }
 
+ 	 public function getprofile()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getprofile($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
 
 
  }

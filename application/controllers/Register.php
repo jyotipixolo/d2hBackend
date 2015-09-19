@@ -24,11 +24,11 @@
  	 	$this->load->view('json', $message); 
  	 }
 
- 	 public function vendorlogin()
+ 	 public function getallvendorvehicles()
  	 {
- 	 	$phone = $this->input->get('phone');
- 	 	$message['json'] = $this->model->vendorlogin($phone);
- 	 	$this->load->view('json', $message); 
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getallvendorvehicles($id);
+ 	 	$this->load->view('json', $message);
  	 }
 
  	

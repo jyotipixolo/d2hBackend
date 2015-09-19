@@ -132,6 +132,25 @@
  	  	};  	  
  	  }
 
+ 	  public function getprofile($id)
+ 	  {
+ 	  		$type = $this->db->query("SELECT `v_type` FROM `vehicle_details` WHERE `id` = '$id' ")->row();
+ 	  		if($type->v_type == "tourist")
+ 	  		{
+ 	  			$query = $this->db->query("SELECT `vehicle_tourist_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tourist_model`.`vehiclemodel_name` AS `vehiclemodel`, `vehicle_tourist_model`.`image` AS `vehiclephoto`, `register`.`id` AS `vendorid` FROM `vehicle_details` INNER JOIN `register` ON `vehicle_details`.`pid` = `register`.`id` INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make` = `vehicle_tourist_make`.`id` INNER JOIN `vehicle_tourist_model` ON `vehicle_details`.`model`=`vehicle_tourist_model`.`vehiclemodel_name` WHERE `vehicle_tourist_model`.`vehicle_makeID` = `vehicle_details`.`make` AND `vehicle_details`.`id` = '$id'")->row();
+ 	  		}
+ 	  		if($type->v_type == "tempo")
+ 	  		{
+				$query = $this->db->query("SELECT `vehicle_tempo_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tempo_model`.`vehiclemodel_name` AS `vehiclemodel`, `vehicle_tempo_model`.`image` AS `vehiclephoto`, `register`.`id` AS `vendorid` FROM `vehicle_details` INNER JOIN `register` ON `vehicle_details`.`pid` = `register`.`id` INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make` = `vehicle_tourist_make`.`id` INNER JOIN `vehicle_tourist_model` ON `vehicle_details`.`model`=`vehicle_tourist_model`.`vehiclemodel_name` WHERE `vehicle_tourist_model`.`vehicle_makeID` = `vehicle_details`.`make` AND `vehicle_details`.`id` = '$id'")->row();
+ 	  		}
+ 	  		if($type->v_type == "rickshaw")
+ 	  		{}
+	 	  	if($type->v_type == "taxi")
+	 	  	{}
+	 	  return $query;
+
+ 	  }
+
  	 
  } 
  
