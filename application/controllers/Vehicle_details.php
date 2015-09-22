@@ -15,17 +15,6 @@
  	 { 
  	 	 $message['json']=$this->model->get_all(); 
  	 	 $this->load->view('json', $message); 
- 	 } 
- 	 public function positionofdriver()
- 	 {
- 	 	$location = $this->input->get('location');
- 	 	$type = $this->input->get('type');
- 	 	$data = json_decode($location); 	 
- 	 	$latitude = $data->latitude;
- 	 	$longitude = $data->longitude;
- 	 	$message['json'] = $this->model->positionofdriver($latitude,$longitude,$type);
- 	 	$this->load->view('json', $message);
-
  	 }
 
  	 public function vehicleinfo()
@@ -41,8 +30,20 @@
  	 	$longitude2 = $location2->longitude;
  	 	$message['json'] = $this->model->vehicleinfo($latitude1,$longitude1,$latitude2,$longitude2,$type);
  	 	$this->load->view('json', $message);
+ 	 }
 
+ 	 public function changeactivestatus()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->changeactivestatus($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
 
+ 	 public function changeavailibilitystatus()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->changeavailibilitystatus($id);
+ 	 	$this->load->view('json', $message);
  	 }
 
  	 public function getprofile()

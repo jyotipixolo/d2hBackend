@@ -6,19 +6,6 @@
 
  
  	 //Write functions here 
- 	public function positionofdriver($latitude,$longitude,$type)
- 	{
- 		$lat = floatval($latitude);
- 		$long = floatval($longitude);
- 		$lat1 = $lat-0.50;
- 		$lat2 = $lat+0.50;
- 		$long1 = $long-0.50;
- 		$long2 = $long+0.50;
- 		$sql = "SELECT * FROM `vehicle_details` WHERE (`latitude` BETWEEN $lat1 AND $lat2) AND (`longitude` BETWEEN $long1 AND $long2) AND (`v_type`= '$type')";
- 		$query = $this->db->query($sql)->result();
- 		return $query;
- 		
- 	}
 
  	public function vehicleinfo($latitude1,$longitude1,$latitude2,$longitude2,$type)
  	 {
@@ -82,19 +69,41 @@
  	 }
 
 
- 	  public	function driverupdate($id,$latitude,$longitude)
- 	  {
- 	  	$query = $this->db->query("SELECT `activestatus` FROM `vehicle_details` WHERE `id`= '$id' AND `latitude` = '$latitude' AND `longitude` = '$longitude'")->row();
- 	  	if(`activestatus` == 0)
- 	  	{
- 	  		$query = $this->db->query("UPDATE `vehicle_details` SET `activestatus` = 1 WHERE `id`= '$id'");
- 	  	}
+ 	  public function changeactivestatus($id)
+ 	 {
+ 	 	$query = $this->db->query("SELECT `activestatus` FROM `vehicle_details` WHERE `id` = '$id'")->row();
+ 	 	if($query->activestatus == 1)
+ 	 		{
+ 	 			$update = $this->db->query("UPDATE `vehicle_details` SET `activestatus`=0 WHERE `id`='$id'");
+ 	 			$return = false;
+ 	 		}else{
+ 	 			$update = $this->db->query("UPDATE `vehicle_details` SET `activestatus`=1 WHERE `id`='$id'");
+ 	 			$return = true;
+ 	 		};
+ 	 	if($update == 1)
+ 	 	{
+ 	 		return $return;
+ 	 	};
+ 	 }
 
- 	  	return $query;
+ 	 public function changeavailibilitystatus($id)
+ 	 {
+ 	 	$query = $this->db->query("SELECT `availabilitystatus` FROM `vehicle_details` WHERE `id` = '$id'")->row();
+ 	 	if($query->availabilitystatus == 1)
+ 	 		{
+ 	 			$update = $this->db->query("UPDATE `vehicle_details` SET `availabilitystatus`=0 WHERE `id`='$id'");
+ 	 			$return = false;
+ 	 		}else{
+ 	 			$update = $this->db->query("UPDATE `vehicle_details` SET `availabilitystatus`=1 WHERE `id`='$id'");
+ 	 			$return = true;
+ 	 		};
+ 	 	if($update == 1)
+ 	 	{
+ 	 		return $return;
+ 	 	};
+ 	 }
 
- 	  }
-
- 	  public	function driverstatus($id,$latitude,$longitude)
+ 	  public function driverstatus($id,$latitude,$longitude)
  	  {
  	  	$sql = "SELECT `activestatus` FROM `vehicle_details` WHERE `id`= '$id' AND `latitude` = '$latitude' AND `longitude` = '$longitude'"; 	  	 
  	 	$query = $this->db->query($sql)->row();

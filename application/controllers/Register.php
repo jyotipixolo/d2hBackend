@@ -24,10 +24,31 @@
  	 	$this->load->view('json', $message); 
  	 }
 
+ 	 public function getaccount()
+ 	 {
+ 	 	$phone = $this->input->get('phone');
+ 	 	$message['json'] = $this->model->getaccount($phone);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
  	 public function getallvendorvehicles()
  	 {
  	 	$id = $this->input->get('id');
  	 	$message['json'] = $this->model->getallvendorvehicles($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
+ 	 public function getvendorprofile()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getvendorprofile($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
+ 	 public function getdriverprofile()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getdriverprofile($id);
  	 	$this->load->view('json', $message);
  	 }
 

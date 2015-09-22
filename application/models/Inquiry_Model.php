@@ -52,9 +52,25 @@
 
  	 public function inquiriesbydriverid($id)
  	 {
- 	 	$query = $this->db->query("SELECT `cust_inquiry`.`inq_no`, `cust_inquiry`.`name`, `cust_inquiry`.`mobile`, `cust_inquiry`.`date` FROM `cust_inquiry` WHERE `cust_inquiry`.`pid`= $id")->result();
- 	 	return $query;
+      $this->db->select('`inq_no`, `name`, `mobile`, `date`, `driveraccept`, `useraccept`, `fromloc`, `toloc`');
+      $this->db->where('vehicleid', $id);
+      $query = $this->db->get('inquiry')->result();
+   	 	return $query;
  	 }
+
+   public function inquiriesbyvendorid($id)
+   {
+        $drivers = $this->db->query("SELECT `id` FROM `vehicle_details` WHERE `pid` = '$id'")->result();
+        $driversarray = array();
+        foreach ($drivers as $driver) {
+            array_push($driversarray, $driver->id);
+        };
+        $this->db->select('`inq_no`, `name`, `mobile`, `date`, `driveraccept`, `useraccept`, `fromloc`, `toloc`');
+        $this->db->where_in('vehicleid', $driversarray);
+        $query = $this->db->get('inquiry')->result();
+      
+        return $query;
+   }
 
  	 public function changedriverinquirystatusbyid($id)
  	 {

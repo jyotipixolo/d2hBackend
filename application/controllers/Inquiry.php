@@ -35,6 +35,12 @@
  	 	$message['json'] = $this->model->inquiriesbydriverid($id);
  	 	$this->load->view('json', $message); 
  	 }
+ 	 public function inquiriesbyvendorid()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->inquiriesbyvendorid($id);
+ 	 	$this->load->view('json', $message); 
+ 	 }
 
  	  public function changedriverinquirystatusbyid()
  	  {
