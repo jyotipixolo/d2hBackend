@@ -156,8 +156,8 @@
  	 				$this->db->where($array);
  	 				$this->db->from('inquiry');
 	 	 			$this->db->join('vehicle_details', 'vehicle_details.id = inquiry.vehicleid', 'inner');
-	 	 			 $query = $this->db->get()->row();
-	 	 			 array_push($driversarray, $query);
+	 	 			$query = $this->db->get()->row();
+	 	 			array_push($driversarray, $query);
  	 			}
 			};
 
