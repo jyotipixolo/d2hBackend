@@ -8,7 +8,8 @@
  	 public function Inquiry($vehicleid, $userid, $ip, $fromloc, $toloc)
  	 {
 
-    $sql3 = $this->db->query("SELECT `activestatus`, `availabilitystatus` FROM `vehicle_details` WHERE `id`='$vehicleid'")->row();
+    $sql3 = $this->db->query("SELECT `vehicle_details`.`activestatus` AS `activestatus`,  `vehicle_details`.`v_type` AS `v_type`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, `register`.`phone` AS `phone`, `vehicle_details`.`model` AS `model` FROM `vehicle_details` INNER JOIN `register` ON `vehicle_details`.`pid` = `register`.`id` WHERE `vehicle_details`.`id`='$vehicleid'")->row();
+
     if($sql3->activestatus==1 and $sql3->availabilitystatus==1)
      {
  	 	 $sql2 = $this->db->query("SELECT `name`, `contact` FROM `users` WHERE `id`='$userid'")->row();
@@ -23,7 +24,7 @@
  	 		
  	 		
 
- 	 		$query = $this->db->query("INSERT INTO `cust_inquiry` (`inq_no`,`name`, `mobile`, `ip`, `date`, `v_name`, `pid`,`userid`) VALUES ('$id', '$sql2->name', '$sql2->contact', '$ip', NOW(), '$sql->firstname', '$sql->pid','$userid')");
+ 	 		$query = $this->db->query("INSERT INTO `cust_inquiry` (`inq_no`,`name`, `mobile`, `ip`, `date`, `v_name`, `v_type`, `v_phone`, `v_model`, `pid`,`userid`) VALUES ('$id', '$sql2->name', '$sql2->contact', '$ip', NOW(), '$sql->firstname', '$sql3->v_type', '$sql3->phone', '$sql3->model','$sql->pid','$userid')");
 
  	 		if($query==true)	
  	 		{
