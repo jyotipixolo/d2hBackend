@@ -115,7 +115,7 @@
 			{
 				foreach ($drivers as $driver) {
 				
-					$this->db->select('`vehicle_details`.`v_type` AS `vtype`,`vehicle_details`.`activestatus` AS `activestatus`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, `vehicle_tourist_make`.`id` AS `makeid`, `vehicle_tourist_make`.`vehicle_name` AS `make`, `vehicle_tourist_model`.`vehiclemodel_name` AS `model`, `vehicle_tourist_model`.`image` AS `image`, COUNT(*) AS `inquiries`');
+					$this->db->select('`vehicle_details`.`id` AS `id`,`vehicle_details`.`v_type` AS `vtype`,`vehicle_details`.`activestatus` AS `activestatus`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, `vehicle_tourist_make`.`id` AS `makeid`, `vehicle_tourist_make`.`vehicle_name` AS `make`, `vehicle_tourist_model`.`vehiclemodel_name` AS `model`, `vehicle_tourist_model`.`image` AS `image`, COUNT(*) AS `inquiries`');
  	 				$array = array('`inquiry`.`vehicleid`' => $driver->id, '`vehicle_tourist_model`.`vehicle_makeID`' => $driver->make);
  	 				$this->db->where($array);
  	 				$this->db->from('inquiry');
