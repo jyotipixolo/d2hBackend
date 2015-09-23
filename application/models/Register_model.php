@@ -78,7 +78,7 @@
  	 			$this->db->select('`vehicle_details`.`v_type`, COUNT(*) AS `inquiries`');
  	 			$this->db->where('`inquiry`.`vehicleid`',$id);
  	 		};
- 	 		if($type->v_type == "taxi")
+ 	 		if($type->v_type == "local taxi")
  	 		{
  	 			$this->db->select('`vehicle_details`.`v_type`, COUNT(*) AS `inquiries`');
  	 			$this->db->where('`inquiry`.`vehicleid`',$id);
