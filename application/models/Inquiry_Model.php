@@ -55,6 +55,7 @@
  	 {
       $this->db->select('`inq_no`, `name`, `mobile`, `date`, `driveraccept`, `useraccept`, `fromloc`, `toloc`');
       $this->db->where('vehicleid', $id);
+      $this->db->order_by("date", "desc"); 
       $query = $this->db->get('inquiry')->result();
    	 	return $query;
  	 }
@@ -68,6 +69,7 @@
         };
         $this->db->select('`inq_no`, `name`, `mobile`, `date`, `driveraccept`, `useraccept`, `fromloc`, `toloc`');
         $this->db->where_in('vehicleid', $driversarray);
+        $this->db->order_by("date", "desc"); 
         $query = $this->db->get('inquiry')->result();
       
         return $query;
