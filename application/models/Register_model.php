@@ -36,7 +36,7 @@
 
  	 public function getaccount($phone)
  	 {
-	 	 	$query = $this->db->query("SELECT `balance`, `smscount` FROM `user_account` WHERE `mobile` = '$phone'")->row();
+	 	 	$query = $this->db->query("SELECT `balance`, `sms_count` AS `smscount` FROM `user_account` WHERE `mobile` = '$phone'")->row();
 	 	 	return $query;
  	 }
 
