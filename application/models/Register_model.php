@@ -127,6 +127,53 @@
  	 			}
 			};
 
+		if($type->type == "transporter")
+			{
+				foreach ($drivers as $driver) {
+				
+					$this->db->select('`vehicle_details`.`v_type` AS `vtype`,`vehicle_details`.`activestatus` AS `activestatus`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, `vehicle_tempo_make`.`id` AS `makeid`, `vehicle_tempo_make`.`vehicle_name` AS `make`, `vehicle_tempo_model`.`vehiclemodel_name` AS `model`, `vehicle_tempo_model`.`image` AS `image`, COUNT(*) AS `inquiries`');
+
+ 	 				$array = array('`inquiry`.`vehicleid`' => $driver->id, '`vehicle_tempo_model`.`vehicle_makeID`' => $driver->make);
+ 	 				$this->db->where($array);
+
+ 	 				$this->db->from('inquiry');
+
+	 	 			$this->db->join('vehicle_details', 'vehicle_details.id = inquiry.vehicleid', 'inner');
+ 	 				$this->db->join('vehicle_tempo_make', 'vehicle_details.make = vehicle_tempo_make.id', 'inner');
+	 	 			$this->db->join('vehicle_tempo_model', 'vehicle_details.model = vehicle_tempo_model.vehiclemodel_name', 'inner');
+
+	 	 			$query = $this->db->get()->row();
+	 	 			array_push($driversarray, $query);
+ 	 			}
+			};
+
+		if($type->type == "rickshaw")
+			{
+				foreach ($drivers as $driver) {
+				
+					$this->db->select('`vehicle_details`.`v_type` AS `vtype`,`vehicle_details`.`activestatus` AS `activestatus`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, COUNT(*) AS `inquiries`');
+ 	 				$array = array('`inquiry`.`vehicleid`' => $driver->id);
+ 	 				$this->db->where($array);
+ 	 				$this->db->from('inquiry');
+	 	 			$this->db->join('vehicle_details', 'vehicle_details.id = inquiry.vehicleid', 'inner');
+	 	 			 $query = $this->db->get()->row();
+	 	 			 array_push($driversarray, $query);
+ 	 			}
+			};
+
+		if($type->type == "local taxi")
+			{
+				foreach ($drivers as $driver) {
+					$this->db->select('`vehicle_details`.`v_type` AS `vtype`,`vehicle_details`.`activestatus` AS `activestatus`, `vehicle_details`.`availabilitystatus` AS `availabilitystatus`, COUNT(*) AS `inquiries`');
+ 	 				$array = array('`inquiry`.`vehicleid`' => $driver->id);
+ 	 				$this->db->where($array);
+ 	 				$this->db->from('inquiry');
+	 	 			$this->db->join('vehicle_details', 'vehicle_details.id = inquiry.vehicleid', 'inner');
+	 	 			$query = $this->db->get()->row();
+	 	 			array_push($driversarray, $query);
+ 	 			}
+			};
+
 	 	 	return $driversarray;
  	 } 
 
