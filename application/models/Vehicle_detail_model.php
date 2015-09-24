@@ -34,14 +34,14 @@
 		        }
 
 			
-			$sql = "SELECT `register`.`id` AS `vendorid`, `register`.`firstname` AS `vendorfirstname`, `register`.`lastname` AS `vendorlastname`,`register`.`route` AS `preferedroute`, `vehicle_details`.`id` AS `vehicleid`, `register`.`phone` AS `vendorcontact`, `vehicle_details`.`sub_vendor_contact` AS `drivercontact`, `vehicle_details`.`latitude` AS `latitude`, `vehicle_details`.`longitude` AS `longitude`,";
+			$sql = "SELECT `register`.`id` AS `vendorid`, `register`.`firstname` AS `vendorfirstname`, `register`.`lastname` AS `vendorlastname`,`register`.`route` AS `preferedroute`, `vehicle_details`.`id` AS `vehicleid`, `register`.`phone` AS `vendorcontact`, `vehicle_details`.`sub_vendor_contact` AS `drivercontact`, `vehicle_details`.`latitude` AS `latitude`, `vehicle_details`.`longitude` AS `longitude`";
 
 			if($type == "tempo")
 			{
-				$sql = $sql. " `vehicle_tempo_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tempo_model`.`vehiclemodel_name` AS `vehiclemodel`, `vehicle_tempo_model`.`image` AS `vehiclephoto`, `vehicle_details`.`trolley_length` AS `trollylength`, `vehicle_details`.`ton` AS `ton` ";
+				$sql = $sql. ", `vehicle_tempo_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tempo_model`.`vehiclemodel_name` AS `vehiclemodel`, `vehicle_tempo_model`.`image` AS `vehiclephoto`, `vehicle_details`.`trolley_length` AS `trollylength`, `vehicle_details`.`ton` AS `ton` ";
 			}elseif ($type == "tourist") 
 			{
-				$sql = $sql. " `vehicle_tourist_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tourist_model`.`vehiclemodel_name` AS `vehiclemodel`,`vehicle_tourist_model`.`image` AS `vehiclephoto`";
+				$sql = $sql. ", `vehicle_tourist_make`.`vehicle_name` AS `vehiclemake`, `vehicle_tourist_model`.`vehiclemodel_name` AS `vehiclemodel`,`vehicle_tourist_model`.`image` AS `vehiclephoto`";
 			};
 
 			$sql = $sql." FROM `register`
@@ -50,12 +50,22 @@
 			if($type == "tempo")
 			{
 				$sql = $sql."INNER JOIN `vehicle_tempo_model` ON `vehicle_details`.`model`=`vehicle_tempo_model`.`vehiclemodel_name` 
-				INNER JOIN `vehicle_tempo_make` ON `vehicle_details`.`make`=`vehicle_tempo_make`.`id` WHERE `vehicle_tempo_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
+				INNER JOIN `vehicle_tempo_make` ON `vehicle_details`.`make`=`vehicle_tempo_make`.`id` ";
 			}elseif($type == "tourist")
 			{
 				$sql = $sql."INNER JOIN `vehicle_tourist_model` ON `vehicle_details`.`model`=`vehicle_tourist_model`.`vehiclemodel_name` 
-				INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make`=`vehicle_tourist_make`.`id` WHERE `vehicle_tourist_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
+				INNER JOIN `vehicle_tourist_make` ON `vehicle_details`.`make`=`vehicle_tourist_make`.`id`";
 			};
+
+			$sql = $sql."WHERE";
+
+			if($type=="tempo")
+				{
+					$sql = $sql." `vehicle_tempo_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
+				}
+			elseif ($type=="tourist") {
+					 $sql = $sql." `vehicle_tourist_model`.`vehicle_makeID` = `vehicle_details`.`make` AND";
+				}
 
 			$sql = $sql."  `vehicle_details`.`latitude` BETWEEN '$lat2' AND '$lat1' 
 			AND `vehicle_details`.`longitude` BETWEEN '$long2' AND '$long1'
@@ -159,6 +169,32 @@
 	 	  return $query;
 
  	  }
+ 	  public function getactivestatus($id)
+ 	 {
+ 	 	$query = $this->db->query("SELECT `activestatus` FROM `vehicle_details` WHERE `id` = '$id'")->row();
+ 	 	if($query->activestatus == '1')
+ 	 		{ 	 			
+ 	 			return true;
+ 	 		}else{
+ 	 			
+ 	 			return false;
+ 	 		}; 	 
+
+
+ 	 }
+
+ 	 public function getavailibilitystatus($id)
+ 	 {
+ 	 	$query = $this->db->query("SELECT `availabilitystatus` FROM `vehicle_details` WHERE `id` = '$id'")->row();
+ 	 	if($query->availabilitystatus == '1')
+ 	 		{ 	 			
+ 	 			return true;
+ 	 		}else{
+ 	 			
+ 	 			return false;
+ 	 		};
+ 	 }
+
 
  	 
  } 

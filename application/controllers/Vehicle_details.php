@@ -53,6 +53,20 @@
  	 	$this->load->view('json', $message);
  	 }
 
+ 	 public function getactivestatus()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getactivestatus($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
+ 	 public function getavailibilitystatus()
+ 	 {
+ 	 	$id = $this->input->get('id');
+ 	 	$message['json'] = $this->model->getavailibilitystatus($id);
+ 	 	$this->load->view('json', $message);
+ 	 }
+
 
 
  }

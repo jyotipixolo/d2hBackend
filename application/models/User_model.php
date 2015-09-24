@@ -31,7 +31,9 @@
 
     	if($query->num_rows()>0)
     	{
-    		return $query->row();
+    		$query1 = $this->db->query("UPDATE `users` SET `name` = '$name' WHERE `contact` = '$contact'");
+            /*return $query;*/
+            return $query->row();
     	}
     	else {
            $query = $this->db->query("INSERT INTO `users` (`name`, `contact`) VALUES ('$name', '$contact')");
